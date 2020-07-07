@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.transition.TransitionManager;
 
 public class SecondFragment extends Fragment {
+    boolean isVisible = false;
 
     @Override
     public View onCreateView(
@@ -22,12 +27,17 @@ public class SecondFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ConstraintLayout transitionWrapper = view.findViewById(R.id.trainsition_wrapper);
+        Button btnSecond = view.findViewById(R.id.button_second);
+        TextView animatedText = view.findViewById(R.id.animatedText);
 
-        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
+        btnSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                TransitionManager.beginDelayedTransition(transitionWrapper);
+                isVisible = !isVisible;
+                animatedText.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+
             }
         });
     }

@@ -1,6 +1,8 @@
 package digipodium.animateit;
 
+import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
@@ -41,6 +43,13 @@ public class FirstFragment extends Fragment {
                         .rotationY(360f)
                         .setDuration(500)
                         .setInterpolator(new BounceInterpolator())
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                NavHostFragment.findNavController(FirstFragment.this)
+                                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                            }
+                        })
                         .start();
             }
         });
